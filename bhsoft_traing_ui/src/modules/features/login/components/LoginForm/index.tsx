@@ -8,11 +8,10 @@ interface Iprops {
      setValue: any;
      handleClick: Function;
      erro: ILogin;
-     setErro: any;
-     handlerOnChange: Function;
+     checkErro: Function;
 }
 
-const LoginForm = ({ value, setValue, handleClick, erro, handlerOnChange }: Iprops) => {
+const LoginForm = ({ value, setValue, handleClick, erro, checkErro }: Iprops) => {
      return (
           <div className="bg-slate-200 flex justify-center items-center h-screen flex-col w-1/2">
                <div className="flex flex-col w-[300px] mt-2">
@@ -26,7 +25,8 @@ const LoginForm = ({ value, setValue, handleClick, erro, handlerOnChange }: Ipro
                          id={'username'}
                          value={value.username}
                          onChange={(e) => {
-                              handlerOnChange(e.target.value, setValue.setUsername, 'username');
+                              checkErro({ username: e.target.value, password: value.password });
+                              setValue.setUsername(e.target.value);
                          }}
                     />
                     {erro?.username && <p className="m-1 text-red-500">{erro?.username}</p>}
@@ -42,7 +42,8 @@ const LoginForm = ({ value, setValue, handleClick, erro, handlerOnChange }: Ipro
                          id={'password'}
                          value={value.password}
                          onChange={(e) => {
-                              handlerOnChange(e.target.value, setValue.setPassword, 'password');
+                              checkErro({ usename: value.username, password: e.target.value });
+                              setValue.setPassword(e.target.value);
                          }}
                     />
                     {erro?.password && <p className="m-1 text-red-500">{erro?.password}</p>}

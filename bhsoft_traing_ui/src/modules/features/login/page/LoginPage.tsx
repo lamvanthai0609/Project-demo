@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { ArrowFunction } from 'typescript';
 import { ILogin } from '../../../../models';
+import { useAppDispatch } from '../../../../redux/hook';
 import LoginForm from '../components/LoginForm';
+import { login } from '../redux/authReducer';
 
 const LoginPage = () => {
+     const dispath = useAppDispatch();
+
      const [username, setUsername] = useState('');
      const [password, setPassword] = useState('');
      const [erro, setErro] = useState({
@@ -19,30 +23,30 @@ const LoginPage = () => {
           setUsername,
           setPassword,
      };
-     const checkErro = (value: string, key: string) => {
-          value ? setErro({ ...erro, [key]: '' }) : setErro({ ...erro, [key]: 'Không được để rỗng' });
+     const checkErro = (value: ILogin) => {
+          let erroUsername = value.username !== '' ? '' : 'Tài khoản không được trống';
+          let erroPassword = value.password !== '' ? '' : 'Mật khẩu không được để trống';
+
+          setErro({
+               username: erroUsername,
+               password: erroPassword,
+          });
      };
-     const handlerOnChange = (value: string, setFuc: Function, key: string) => {
-          checkErro(value, key);
+     const handlerOnChange = (value: ILogin, setFuc: Function) => {
+          checkErro(value);
           setFuc(value);
      };
-     const handlerData = () => {
-          checkErro(username, 'username');
-          checkErro(password, 'password');
-
-          ///if (erro.username !== '' || erro.password !== '') return;
-          console.log(value);
+     const handlerData = async () => {
+          checkErro(value);
+          if (username !== '' && password !== '') {
+               try {
+                    await dispath(login(value, dispath));
+               } catch (erro) {
+                    console.log('erro');
+               }
+          }
      };
-     return (
-          <LoginForm
-               value={value}
-               setValue={setValue}
-               handleClick={handlerData}
-               erro={erro}
-               setErro={setErro}
-               handlerOnChange={handlerOnChange}
-          />
-     );
+     return <LoginForm value={value} setValue={setValue} handleClick={handlerData} erro={erro} checkErro={checkErro} />;
 };
 
 export default LoginPage;
