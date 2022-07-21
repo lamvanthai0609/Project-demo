@@ -1,0 +1,23 @@
+
+
+
+//auth login
+POST http://localhost:3300/api/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+     "username":"dfsfs",
+     "password":"Lamvanthai0609"
+};
+###
+//auth signup
+POST http://localhost:3300/api/auth/signup HTTP/1.1
+Content-Type: application/json
+
+{
+     "username":"admin",
+     "password":"admin",
+     "name" : "Lâm Văn Thái",
+     "email": "lamvanthai0609@gmail.com",
+}
+
