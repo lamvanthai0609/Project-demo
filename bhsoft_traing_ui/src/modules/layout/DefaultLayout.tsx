@@ -8,7 +8,7 @@ const DefaultLayout = (childElement: any) => {
      return (
           <>
                <Header />
-               <div>{children}</div>
+               {children}
                <Footer />
           </>
      );

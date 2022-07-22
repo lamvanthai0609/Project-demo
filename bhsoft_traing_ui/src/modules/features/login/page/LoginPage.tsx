@@ -1,12 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { ArrowFunction } from 'typescript';
+import { useNavigate } from 'react-router-dom';
 import { ILogin } from '../../../../models';
-import { useAppDispatch } from '../../../../redux/hook';
+import { useAppDispatch, useAppSelector } from '../../../../redux/hook';
+import Loadding from '../../../components/loadding';
 import LoginForm from '../components/LoginForm';
-import { login } from '../redux/authReducer';
+import { tokenAuthSelector } from '../redux/authSelector';
+import { login } from '../redux/authThunk';
 
 const LoginPage = () => {
+     const navigate = useNavigate();
      const dispath = useAppDispatch();
+     const [isloading, setIsloadding] = useState(false);
+     const token = useAppSelector(tokenAuthSelector);
+     useEffect(() => {
+          if (token) {
+               navigate('/product');
+          }
+     }, [token]);
 
      const [username, setUsername] = useState('');
      const [password, setPassword] = useState('');
@@ -40,13 +50,27 @@ const LoginPage = () => {
           checkErro(value);
           if (username !== '' && password !== '') {
                try {
-                    await dispath(login(value, dispath));
+                    setIsloadding(true);
+                    await dispath(login(value));
                } catch (erro) {
-                    console.log('erro');
+                    console.log(erro);
+               } finally {
+                    setIsloadding(false);
                }
           }
      };
-     return <LoginForm value={value} setValue={setValue} handleClick={handlerData} erro={erro} checkErro={checkErro} />;
+     return (
+          <div>
+               {isloading && <Loadding />}
+               <LoginForm
+                    value={value}
+                    setValue={setValue}
+                    handleClick={handlerData}
+                    erro={erro}
+                    checkErro={checkErro}
+               />
+          </div>
+     );
 };
 
 export default LoginPage;
