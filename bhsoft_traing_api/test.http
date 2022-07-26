@@ -21,3 +21,24 @@ Content-Type: application/json
      "email": "lamvanthai0609@gmail.com"
 }
 
+
+
+
+###
+
+//product
+
+POST http://localhost:3300/api/product/ HTTP/1.1
+Content-Type: application/json
+
+{
+     "name":"Áo Phông Regular Cotton 0164",
+     "thumbnails":"https://mcdn.nhanh.vn/store/662/ps/20220722/AP0164__1__thumb.jpg",
+     "description" : "Sản phẩm đẹp chất lượng",
+     "price": 345000,
+     "amount":100,
+     "type":"ao-phong"
+}
+
+###
+GET http://localhost:3300/api/product/?_limit=3 HTTP/1.1
