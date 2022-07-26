@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ILogin } from '../../../../models';
 import { useAppDispatch, useAppSelector } from '../../../../redux/hook';
-import Loadding from '../../../components/loadding';
-import LoginForm from '../components/LoginForm';
+import { Loadding } from '../../../components/loadding';
+import { LoginForm } from '../components/LoginForm';
 import { tokenAuthSelector } from '../redux/authSelector';
 import { login } from '../redux/authThunk';
 
-const LoginPage = () => {
-     const navigate = useNavigate();
+export const LoginPage = () => {
      const dispath = useAppDispatch();
+     const navigate = useNavigate();
      const [isloading, setIsloadding] = useState(false);
      const token = useAppSelector(tokenAuthSelector);
      useEffect(() => {
@@ -17,7 +17,6 @@ const LoginPage = () => {
                navigate('/product');
           }
      }, [token]);
-
      const [username, setUsername] = useState('');
      const [password, setPassword] = useState('');
      const [erro, setErro] = useState({
@@ -46,17 +45,19 @@ const LoginPage = () => {
           checkErro(value);
           setFuc(value);
      };
-     const handlerData = async () => {
+     const handlerData = () => {
           checkErro(value);
           if (username !== '' && password !== '') {
-               try {
-                    setIsloadding(true);
-                    await dispath(login(value));
-               } catch (erro) {
-                    console.log(erro);
-               } finally {
-                    setIsloadding(false);
-               }
+               (async () => {
+                    try {
+                         setIsloadding(true);
+                         await dispath(login(value));
+                    } catch (erro) {
+                         console.log(erro);
+                    } finally {
+                         setIsloadding(false);
+                    }
+               })();
           }
      };
      return (
@@ -72,5 +73,3 @@ const LoginPage = () => {
           </div>
      );
 };
-
-export default LoginPage;

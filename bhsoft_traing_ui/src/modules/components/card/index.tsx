@@ -1,4 +1,6 @@
-import Button from '../button';
+import { IProduct } from '../../../models';
+import { formatPrice } from '../../../util/common';
+import { Button } from '../button';
 
 const btn = [
      {
@@ -11,18 +13,27 @@ const btn = [
      },
 ];
 
-const Card = () => {
+interface IProps {
+     data: IProduct;
+}
+
+export const Card = ({ data }: IProps) => {
      return (
-          <div className="h-[530px] w-[300px] border-solid  border-2 border-transparent m-2 rounded flex flex-col justify-between cursor-pointer hover:border-zinc-200">
+          <div className="w-[90%] sm:w-[40%] md:w-[20%]  border-solid  border-2 border-transparent m-2 rounded flex flex-col justify-between cursor-pointer hover:border-zinc-200 ">
                <div className="w-[90%] mx-auto my-[4px]">
                     <img
                          alt=""
-                         src="https://traffic-edge03.cdn.vncdn.io/nvn/ncdn/store/662/ps/20220627/AP0136__0_.jpg"
+                         className="w-full h-full"
+                         src={
+                              data.thumbnails
+                                   ? data.thumbnails
+                                   : 'https://traffic-edge03.cdn.vncdn.io/nvn/ncdn/store/662/ps/20220627/AP0136__0_.jpg'
+                         }
                     />
                </div>
                <div className="text-center">
-                    <p>Áo Phông Regular Cotton 0136</p>
-                    <p className="font-bold text-sm">269,000₫</p>
+                    <p>{data.name}</p>
+                    <p className="font-bold text-sm">{formatPrice(data.price)}</p>
                </div>
                <div className="flex flex-row justify-around my-3">
                     {btn.map((item, index) => (
@@ -32,5 +43,3 @@ const Card = () => {
           </div>
      );
 };
-
-export default Card;

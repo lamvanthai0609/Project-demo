@@ -1,7 +1,13 @@
 import React from 'react';
-import Input from '../../../../components/input';
+import { Input } from '../../../../components/input';
 
-const FilterProduct = ({ valueSearch, setValueSearch, setType }: any) => {
+interface IProps {
+     valueSearch: string;
+     setValueSearch: (e: string) => void;
+     setType: (e: string) => void;
+}
+
+export const FilterProduct = ({ valueSearch, setValueSearch, setType }: IProps) => {
      return (
           <div className="w-[90%] m-auto flex justify-between flex-wrap">
                <div className="flex my-2">
@@ -48,5 +54,3 @@ const FilterProduct = ({ valueSearch, setValueSearch, setType }: any) => {
           </div>
      );
 };
-
-export default FilterProduct;

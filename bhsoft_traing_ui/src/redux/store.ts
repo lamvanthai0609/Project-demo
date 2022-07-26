@@ -10,6 +10,7 @@ const composeEnhancers = composeWithDevTools({});
 const persistConfig = {
      key: 'BHSoft_Traing',
      storage,
+     blacklist: ['products'],
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 const store = createStore(persistedReducer, composeEnhancers(applyMiddleware(thunk)));

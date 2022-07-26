@@ -12,7 +12,7 @@ export interface AuthState {
 const actions = { setAuthAction, setUserInfoAction, login };
 type Action = ActionType<typeof actions>;
 
-export default function authReducer(state: AuthState = {}, action: Action) {
+export function authReducer(state: AuthState = {}, action: Action) {
      switch (action.type) {
           case getType(setAuthAction):
                return {

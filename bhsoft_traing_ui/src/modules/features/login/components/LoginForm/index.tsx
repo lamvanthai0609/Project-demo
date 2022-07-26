@@ -1,17 +1,16 @@
-import React from 'react';
 import { ILogin } from '../../../../../models';
-import Button from '../../../../components/button';
-import Input from '../../../../components/input';
+import { Button } from '../../../../components/button';
+import { Input } from '../../../../components/input';
 
 interface Iprops {
      value: ILogin;
      setValue: any;
-     handleClick: Function;
+     handleClick: () => void;
      erro: ILogin;
      checkErro: Function;
 }
 
-const LoginForm = ({ value, setValue, handleClick, erro, checkErro }: Iprops) => {
+export const LoginForm = ({ value, setValue, handleClick, erro, checkErro }: Iprops) => {
      return (
           <div className=" flex justify-center items-center h-screen flex-col w-full bg-gradient-to-r from-violet-500 to-fuchsia-500 md:w-1/2">
                <div className="flex justify-center items-center w-[400px] flex-col shadow-lg bg-[#e2e8f069] rounded-lg">
@@ -53,12 +52,10 @@ const LoginForm = ({ value, setValue, handleClick, erro, checkErro }: Iprops) =>
                          <Button
                               styles={'text-white bg-sky-800 p-4 w-[300px]'}
                               text={'Đăng Nhập'}
-                              onClick={handleClick}
+                              onclick={handleClick}
                          />
                     </div>
                </div>
           </div>
      );
 };
-
-export default LoginForm;

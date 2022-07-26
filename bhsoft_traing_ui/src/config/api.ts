@@ -5,7 +5,7 @@ export const API_PATHS = {
      login: '/auth/login',
      sigup: '',
      refeshToken: '',
-     getProduct: '',
+     getAllProduct: '/product',
 };
 
 const axiosClient = axios.create({

@@ -6,16 +6,16 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import store, { persistor } from './redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
-import Loadding from './modules/components/loadding';
+import { Loadding } from './modules/components/loadding';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
      <Provider store={store}>
-          {/* <PersistGate loading={<Loadding />} persistor={persistor}> */}
-          <React.StrictMode>
-               <App />
-          </React.StrictMode>
-          {/* </PersistGate> */}
+          <PersistGate loading={<Loadding />} persistor={persistor}>
+               <React.StrictMode>
+                    <App />
+               </React.StrictMode>
+          </PersistGate>
      </Provider>,
 );
 

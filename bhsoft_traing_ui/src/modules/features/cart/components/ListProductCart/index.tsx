@@ -1,43 +1,21 @@
-import React from 'react';
-
-const ListProductCart = () => {
+import { useState } from 'react';
+import { BsTrash } from 'react-icons/bs';
+import { Button } from '../../../../components/button';
+const cols = ['Tên', 'Ảnh', 'Số lượng', 'Giá', 'Xoá'];
+export const ListProductCart = () => {
+     const [amount, setAmount] = useState(1);
+     const handlerAmount = (value: number) => {
+          if (amount + value < 1) return;
+          setAmount(amount + value);
+     };
      return (
           <div className="border w-full">
                <h1 className="text-[30px] font-bold">Giỏ Hàng</h1>
-
-               <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
-                    <div className="pb-4 bg-white dark:bg-gray-900">
-                         <label htmlFor="table-search" className="sr-only">
-                              Search
-                         </label>
-                         <div className="relative mt-1">
-                              <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                                   <svg
-                                        className="w-5 h-5 text-gray-500 dark:text-gray-400"
-                                        aria-hidden="true"
-                                        fill="currentColor"
-                                        viewBox="0 0 20 20"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                   >
-                                        <path
-                                             fill-rule="evenodd"
-                                             d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                                             clip-rule="evenodd"
-                                        ></path>
-                                   </svg>
-                              </div>
-                              <input
-                                   type="text"
-                                   id="table-search"
-                                   className="block p-2 pl-10 w-80 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                   placeholder="Search for items"
-                              />
-                         </div>
-                    </div>
-                    <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+               <div className="overflow-x-auto relative shadow-md sm:rounded-lg my-10">
+                    <table className="w-full text-sm text-left text-black ">
+                         <thead className="text-xs text-black uppercase bg-gray-200  ">
                               <tr>
-                                   <th scope="col" className="p-4">
+                                   <th scope="col" className="p-4 ">
                                         <div className="flex items-center">
                                              <input
                                                   id="checkbox-all-search"
@@ -49,25 +27,15 @@ const ListProductCart = () => {
                                              </label>
                                         </div>
                                    </th>
-                                   <th scope="col" className="py-3 px-6">
-                                        Product name
-                                   </th>
-                                   <th scope="col" className="py-3 px-6">
-                                        Color
-                                   </th>
-                                   <th scope="col" className="py-3 px-6">
-                                        Category
-                                   </th>
-                                   <th scope="col" className="py-3 px-6">
-                                        Price
-                                   </th>
-                                   <th scope="col" className="py-3 px-6">
-                                        Action
-                                   </th>
+                                   {cols.map((item, index) => (
+                                        <th scope="col" key={index} className="py-5 px-6">
+                                             {item}
+                                        </th>
+                                   ))}
                               </tr>
                          </thead>
                          <tbody>
-                              <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                              <tr className="bg-white border-b  dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 opacity-50">
                                    <td className="p-4 w-4">
                                         <div className="flex items-center">
                                              <input
@@ -80,178 +48,96 @@ const ListProductCart = () => {
                                              </label>
                                         </div>
                                    </td>
-                                   <th
-                                        scope="row"
-                                        className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                                   >
+                                   <th scope="row" className="py-4 px-6 font-medium text-black whitespace-nowrap">
                                         Apple MacBook Pro 17"
                                    </th>
-                                   <td className="py-4 px-6">Sliver</td>
-                                   <td className="py-4 px-6">Laptop</td>
+                                   <td className="py-4 px-6 w-[10%]">
+                                        <img
+                                             className="w-full h-full"
+                                             src="https://traffic-edge03.cdn.vncdn.io/nvn/ncdn/store/662/ps/20220627/AP0136__0_.jpg"
+                                        />
+                                   </td>
+                                   <td className="py-4 px-6 ">
+                                        <div className="flex items-center">
+                                             <Button
+                                                  styles="w-[30px] text-center border text-lg border-black"
+                                                  text={'-'}
+                                                  onclick={() => handlerAmount(-1)}
+                                             />
+                                             <input
+                                                  className="w-[30px] text-center border outline-none bg-transparent border-black py-1"
+                                                  type={'text'}
+                                                  readOnly
+                                                  value={amount}
+                                             />
+                                             <Button
+                                                  styles="w-[30px] text-center border text-lg border-black"
+                                                  text={'+'}
+                                                  onclick={() => handlerAmount(1)}
+                                             />
+                                        </div>
+                                   </td>
                                    <td className="py-4 px-6">$2999</td>
                                    <td className="py-4 px-6">
-                                        <a
-                                             href="#"
-                                             className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                                        >
-                                             Edit
-                                        </a>
+                                        <Button
+                                             styles={'font-medium text-black  hover:text-white text-2xl '}
+                                             text={<BsTrash />}
+                                        ></Button>
                                    </td>
                               </tr>
-                              <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                              <tr className="bg-white border-b  dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                    <td className="p-4 w-4">
                                         <div className="flex items-center">
                                              <input
-                                                  id="checkbox-table-search-2"
+                                                  id="checkbox-table-search-1"
                                                   type="checkbox"
                                                   className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                                              />
-                                             <label htmlFor="checkbox-table-search-2" className="sr-only">
+                                             <label htmlFor="checkbox-table-search-1" className="sr-only">
                                                   checkbox
                                              </label>
                                         </div>
                                    </td>
-                                   <th
-                                        scope="row"
-                                        className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                                   >
-                                        Microsoft Surface Pro
+                                   <th scope="row" className="py-4 px-6 font-medium text-black whitespace-nowrap">
+                                        Apple MacBook Pro 17"
                                    </th>
-                                   <td className="py-4 px-6">White</td>
-                                   <td className="py-4 px-6">Laptop PC</td>
-                                   <td className="py-4 px-6">$1999</td>
-                                   <td className="py-4 px-6">
-                                        <a
-                                             href="#"
-                                             className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                                        >
-                                             Edit
-                                        </a>
+                                   <td className="py-4 px-6 w-[10%]">
+                                        <img
+                                             className="w-full h-full"
+                                             src="https://traffic-edge03.cdn.vncdn.io/nvn/ncdn/store/662/ps/20220627/AP0136__0_.jpg"
+                                        />
                                    </td>
-                              </tr>
-                              <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                   <td className="p-4 w-4">
+                                   <td className="py-4 px-6 ">
                                         <div className="flex items-center">
-                                             <input
-                                                  id="checkbox-table-search-3"
-                                                  type="checkbox"
-                                                  className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                             <Button
+                                                  styles="w-[30px] text-center border text-lg border-black"
+                                                  text={'-'}
+                                                  onclick={() => handlerAmount(-1)}
                                              />
-                                             <label htmlFor="checkbox-table-search-3" className="sr-only">
-                                                  checkbox
-                                             </label>
+                                             <input
+                                                  className="w-[30px] text-center border outline-none bg-transparent border-black py-1"
+                                                  type={'text'}
+                                                  readOnly
+                                                  value={amount}
+                                             />
+                                             <Button
+                                                  styles="w-[30px] text-center border text-lg border-black"
+                                                  text={'+'}
+                                                  onclick={() => handlerAmount(1)}
+                                             />
                                         </div>
                                    </td>
-                                   <th
-                                        scope="row"
-                                        className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                                   >
-                                        Magic Mouse 2
-                                   </th>
-                                   <td className="py-4 px-6">Black</td>
-                                   <td className="py-4 px-6">Accessories</td>
-                                   <td className="py-4 px-6">$99</td>
+                                   <td className="py-4 px-6">$2999</td>
                                    <td className="py-4 px-6">
-                                        <a
-                                             href="#"
-                                             className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                                        >
-                                             Edit
-                                        </a>
+                                        <Button
+                                             styles={'font-medium text-black  hover:text-white text-2xl '}
+                                             text={<BsTrash />}
+                                        ></Button>
                                    </td>
                               </tr>
-                              <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                   <td className="p-4 w-4">
-                                        <div className="flex items-center">
-                                             <input
-                                                  id="checkbox-table-3"
-                                                  type="checkbox"
-                                                  className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                                             />
-                                             <label htmlFor="checkbox-table-3" className="sr-only">
-                                                  checkbox
-                                             </label>
-                                        </div>
-                                   </td>
-                                   <th
-                                        scope="row"
-                                        className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                                   >
-                                        Apple Watch
-                                   </th>
-                                   <td className="py-4 px-6">Silver</td>
-                                   <td className="py-4 px-6">Accessories</td>
-                                   <td className="py-4 px-6">$179</td>
-                                   <td className="py-4 px-6">
-                                        <a
-                                             href="#"
-                                             className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                                        >
-                                             Edit
-                                        </a>
-                                   </td>
-                              </tr>
-                              <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                   <td className="p-4 w-4">
-                                        <div className="flex items-center">
-                                             <input
-                                                  id="checkbox-table-3"
-                                                  type="checkbox"
-                                                  className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                                             />
-                                             <label htmlFor="checkbox-table-3" className="sr-only">
-                                                  checkbox
-                                             </label>
-                                        </div>
-                                   </td>
-                                   <th
-                                        scope="row"
-                                        className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                                   >
-                                        iPad
-                                   </th>
-                                   <td className="py-4 px-6">Gold</td>
-                                   <td className="py-4 px-6">Tablet</td>
-                                   <td className="py-4 px-6">$699</td>
-                                   <td className="py-4 px-6">
-                                        <a
-                                             href="#"
-                                             className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                                        >
-                                             Edit
-                                        </a>
-                                   </td>
-                              </tr>
-                              <tr className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                   <td className="p-4 w-4">
-                                        <div className="flex items-center">
-                                             <input
-                                                  id="checkbox-table-3"
-                                                  type="checkbox"
-                                                  className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                                             />
-                                             <label htmlFor="checkbox-table-3" className="sr-only">
-                                                  checkbox
-                                             </label>
-                                        </div>
-                                   </td>
-                                   <th
-                                        scope="row"
-                                        className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                                   >
-                                        Apple iMac 27"
-                                   </th>
-                                   <td className="py-4 px-6">Silver</td>
-                                   <td className="py-4 px-6">PC Desktop</td>
-                                   <td className="py-4 px-6">$3999</td>
-                                   <td className="py-4 px-6">
-                                        <a
-                                             href="#"
-                                             className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                                        >
-                                             Edit
-                                        </a>
-                                   </td>
+                              <tr>
+                                   <td className="py-4 px-6 font-medium text-black whitespace-nowrap">Tổng Tiền</td>
+                                   <td>1231231312</td>
                               </tr>
                          </tbody>
                     </table>
@@ -259,5 +145,3 @@ const ListProductCart = () => {
           </div>
      );
 };
-
-export default ListProductCart;

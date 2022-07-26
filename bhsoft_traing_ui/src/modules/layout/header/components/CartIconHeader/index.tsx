@@ -1,7 +1,7 @@
 import React from 'react';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
-const CartIconHeader = () => {
+export const CartIconHeader = () => {
      return (
           <div className="mx-5">
                <Link to="/cart">
@@ -17,5 +17,3 @@ const CartIconHeader = () => {
           </div>
      );
 };
-
-export default CartIconHeader;

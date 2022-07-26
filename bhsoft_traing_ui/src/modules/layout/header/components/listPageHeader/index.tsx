@@ -1,7 +1,5 @@
 import React from 'react';
 
-const ListPageHeader = () => {
+export const ListPageHeader = () => {
      return <div>ListPageHeader</div>;
 };
-
-export default ListPageHeader;

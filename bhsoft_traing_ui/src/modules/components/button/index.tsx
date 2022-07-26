@@ -1,24 +1,15 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+interface IProps {
+     href?: string;
+     to?: string;
+     onclick?: () => void;
+     text: any;
+     styles: string;
+}
 
-const Button = ({ heft, to, text, styles, ...passprops }: any) => {
-     const props = {
-          ...passprops,
-     };
-     let Card: any = 'button';
-     if (to) {
-          props.to = to;
-          Card = Link;
-     } else if (heft) {
-          props.herf = heft;
-          Card = 'a';
-     }
-
+export const Button = (props: IProps) => {
      return (
-          <Card className={styles} {...props}>
-               {text}
-          </Card>
+          <button className={props.styles} {...props} onClick={props.onclick}>
+               {props.text}
+          </button>
      );
 };
-
-export default Button;

@@ -1,7 +1,5 @@
 import React from 'react';
 
-const LogoHeader = () => {
+export const LogoHeader = () => {
      return <div>LogoHeader</div>;
 };
-
-export default LogoHeader;
