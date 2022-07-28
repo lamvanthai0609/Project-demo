@@ -1,14 +1,14 @@
 interface IProps {
      href?: string;
      to?: string;
-     onclick?: () => void;
+     onClick?: () => void;
      text: any;
      styles: string;
 }
 
 export const Button = (props: IProps) => {
      return (
-          <button className={props.styles} {...props} onClick={props.onclick}>
+          <button className={props.styles} {...props} onClick={props.onClick}>
                {props.text}
           </button>
      );

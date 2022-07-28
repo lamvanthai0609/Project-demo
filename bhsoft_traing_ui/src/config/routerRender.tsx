@@ -33,7 +33,6 @@ export const RouterRender = ({ listRouter, isPrivate = false }: Iprops) => {
                                    ></Route>
                               );
                          } else {
-                              console.log(router);
                               return (
                                    <Route
                                         key={index}

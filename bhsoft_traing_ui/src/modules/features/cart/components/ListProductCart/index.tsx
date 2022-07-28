@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { BsTrash } from 'react-icons/bs';
 import { Button } from '../../../../components/button';
+import { ItemProductCart } from './IteamProductCart';
 const cols = ['Tên', 'Ảnh', 'Số lượng', 'Giá', 'Xoá'];
 export const ListProductCart = () => {
      const [amount, setAmount] = useState(1);
@@ -35,7 +36,8 @@ export const ListProductCart = () => {
                               </tr>
                          </thead>
                          <tbody>
-                              <tr className="bg-white border-b  dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 opacity-50">
+                              <ItemProductCart handlerAmount={handlerAmount} amount={amount} />
+                              {/* <tr className="bg-white border-b  dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 opacity-50">
                                    <td className="p-4 w-4">
                                         <div className="flex items-center">
                                              <input
@@ -134,7 +136,7 @@ export const ListProductCart = () => {
                                              text={<BsTrash />}
                                         ></Button>
                                    </td>
-                              </tr>
+                              </tr> */}
                               <tr>
                                    <td className="py-4 px-6 font-medium text-black whitespace-nowrap">Tổng Tiền</td>
                                    <td>1231231312</td>

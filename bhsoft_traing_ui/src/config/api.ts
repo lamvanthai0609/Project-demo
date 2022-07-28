@@ -6,6 +6,7 @@ export const API_PATHS = {
      sigup: '',
      refeshToken: '',
      getAllProduct: '/product',
+     addCart: '/user/addCart',
 };
 
 const axiosClient = axios.create({
@@ -17,10 +18,20 @@ const axiosClient = axios.create({
 
 axiosClient.interceptors.request.use(
      function (config) {
-          return config;
+          const accessToken = localStorage.getItem('token');
+          const custom: any = {
+               Authorization: accessToken,
+          };
+
+          return {
+               ...config,
+               headers: {
+                    ...config.headers,
+                    ...custom,
+               },
+          };
      },
      function (error) {
-          // Do something with request error
           return Promise.reject(error);
      },
 );
@@ -28,13 +39,9 @@ axiosClient.interceptors.request.use(
 // Add a response interceptor
 axiosClient.interceptors.response.use(
      function (response: AxiosResponse) {
-          // Any status code that lie within the range of 2xx cause this function to trigger
-          // Do something with response data
           return response.data;
      },
      function (error) {
-          // Any status codes that falls outside the range of 2xx cause this function to trigger
-          // Do something with response error
           return Promise.reject(error?.response?.data);
      },
 );

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getAllProductAPI } from '../../../../commons/api/productAPI';
 import { useAppDispatch, useAppSelector } from '../../../../redux/hook';
 import { useDebounce } from '../../../../util/customHook/useDebounc';
 import { Loadding } from '../../../components/loadding';
@@ -30,10 +31,9 @@ export const ProductPage = () => {
           if (data.length <= 0) {
                try {
                     setIsLoadding(true);
-                    const run = async () => {
+                    (async () => {
                          await dispath(getAllProductThunk());
-                    };
-                    run();
+                    })();
                } catch (erro) {
                     console.log(erro);
                } finally {
@@ -41,11 +41,6 @@ export const ProductPage = () => {
                }
           }
      }, [data]);
-     // useEffect(() => {
-     //      if (!token) {
-     //           naviga('/');
-     //      }
-     // }, [token]);
      return (
           <>
                {isloadding ? (

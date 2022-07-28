@@ -52,7 +52,7 @@ export const LoginForm = ({ value, setValue, handleClick, erro, checkErro }: Ipr
                          <Button
                               styles={'text-white bg-sky-800 p-4 w-[300px]'}
                               text={'Đăng Nhập'}
-                              onclick={handleClick}
+                              onClick={handleClick}
                          />
                     </div>
                </div>

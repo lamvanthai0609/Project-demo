@@ -1,23 +1,30 @@
 import { IProduct } from '../../../models';
-import { formatPrice } from '../../../util/common';
+import { useAppDispatch, useAppSelector } from '../../../redux/hook';
+import { formatPrice, handlerRequestDataCart } from '../../../util/common';
+import { getDataCartSelector } from '../../features/cart/redux/cartSelector';
+import { getDatacartThunk } from '../../features/cart/redux/cartThunk';
 import { Button } from '../button';
-
-const btn = [
-     {
-          styles: 'bg-black text-white px-4 py-2 text-sm w-[120px] border-2 border-solid border-transparent hover:text-black hover:bg-zinc-200 hover:border-black',
-          text: 'Thêm giỏ',
-     },
-     {
-          styles: 'bg-black text-white px-4 py-2 text-sm w-[120px] border-2 border-solid border-transparent hover:text-black hover:bg-zinc-200 hover:border-black',
-          text: 'Mua ngay',
-     },
-];
+const style =
+     'bg-black text-white px-4 py-2 text-sm w-[120px] border-2 border-solid border-transparent hover:text-black hover:bg-zinc-200 hover:border-black';
 
 interface IProps {
      data: IProduct;
 }
 
 export const Card = ({ data }: IProps) => {
+     const dispath = useAppDispatch();
+     const cartData = useAppSelector(getDataCartSelector) || [];
+     const handlerAddCart = (idProduct: string) => {
+          const listCartNew = handlerRequestDataCart(idProduct, cartData);
+          (async () => {
+               try {
+                    await dispath(getDatacartThunk(listCartNew));
+               } catch (erro) {
+                    console.log(erro);
+               }
+          })();
+     };
+
      return (
           <div className="w-[90%] sm:w-[40%] md:w-[20%]  border-solid  border-2 border-transparent m-2 rounded flex flex-col justify-between cursor-pointer hover:border-zinc-200 ">
                <div className="w-[90%] mx-auto my-[4px]">
@@ -36,9 +43,14 @@ export const Card = ({ data }: IProps) => {
                     <p className="font-bold text-sm">{formatPrice(data.price)}</p>
                </div>
                <div className="flex flex-row justify-around my-3">
-                    {btn.map((item, index) => (
-                         <Button key={index} styles={item.styles} text={item.text} />
-                    ))}
+                    <Button
+                         styles={style}
+                         text={'Thêm giỏ'}
+                         onClick={() => {
+                              handlerAddCart(data._id);
+                         }}
+                    />
+                    <Button styles={style} text={'Mua ngay'} />
                </div>
           </div>
      );
