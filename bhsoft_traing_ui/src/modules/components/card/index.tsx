@@ -1,6 +1,7 @@
 import { IProduct } from '../../../models';
+import { ICart, IcartRequest } from '../../../models/cart';
 import { useAppDispatch, useAppSelector } from '../../../redux/hook';
-import { formatPrice, handlerRequestDataCart } from '../../../util/common';
+import { formatPrice } from '../../../util/common';
 import { getDataCartSelector } from '../../features/cart/redux/cartSelector';
 import { getDatacartThunk } from '../../features/cart/redux/cartThunk';
 import { Button } from '../button';
@@ -15,10 +16,13 @@ export const Card = ({ data }: IProps) => {
      const dispath = useAppDispatch();
      const cartData = useAppSelector(getDataCartSelector) || [];
      const handlerAddCart = (idProduct: string) => {
-          const listCartNew = handlerRequestDataCart(idProduct, cartData);
+          const cart: IcartRequest = {
+               product: idProduct,
+               quanlity: (cartData.find((item: ICart) => item.product._id === idProduct)?.quanlity || 0) + 1,
+          };
           (async () => {
                try {
-                    await dispath(getDatacartThunk(listCartNew));
+                    await dispath(getDatacartThunk(cart));
                } catch (erro) {
                     console.log(erro);
                }

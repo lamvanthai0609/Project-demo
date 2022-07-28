@@ -8,7 +8,7 @@ class UserController {
      }
 
      async addCart(req: Request, res: Response) {
-          const dataRequest: Array<ICart> = req.body.cart;
+          const dataRequest: ICart = req.body.cart;
           const data = await userService.addToCart(req.user, dataRequest);
           return res.json(data);
      }

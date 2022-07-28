@@ -6,7 +6,7 @@ import { Logout } from '../components/logout';
 
 export const Header = () => {
      return (
-          <div className="h-16 w-screen shadow-md">
+          <div className="h-16 shadow-md">
                <div className="h-[100%] w-[90%] m-auto flex items-center justify-between">
                     <div>
                          <LogoHeader />

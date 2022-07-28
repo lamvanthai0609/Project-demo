@@ -1,4 +1,5 @@
 import React from 'react';
+import { NotFound } from '../modules/components/notfound';
 import { CartPage } from '../modules/features/cart/page/CartPage';
 import { LoginPage } from '../modules/features/login/page/LoginPage';
 import { ProductPage } from '../modules/features/product/page/ProductPage';
@@ -10,7 +11,10 @@ export interface IRouter {
      Layout?: any;
 }
 
-export const publicRouter: Array<IRouter> = [{ path: '/', component: LoginPage }];
+export const publicRouter: Array<IRouter> = [
+     { path: '/', component: LoginPage },
+     // { path: '*', component: NotFound },
+];
 
 export const privateRouter: Array<IRouter> = [
      { path: '/product', component: ProductPage, Layout: DefaultLayout },

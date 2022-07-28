@@ -9,7 +9,7 @@ export interface Iuser {
      image?: string;
      address?: Array<string>;
      role: string;
-     cart?: Array<ICart>;
+     cart: Array<ICart>;
      comparePassword?: Function;
 }
 

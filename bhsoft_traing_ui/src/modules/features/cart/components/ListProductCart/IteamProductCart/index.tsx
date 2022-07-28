@@ -1,15 +1,51 @@
 import { useState } from 'react';
 import { BsTrash } from 'react-icons/bs';
+import { ICart, IcartRequest } from '../../../../../../models/cart';
+import { useAppDispatch, useAppSelector } from '../../../../../../redux/hook';
+import { formatPrice } from '../../../../../../util/common';
 import { Button } from '../../../../../components/button';
+import { getDataCartSelector } from '../../../redux/cartSelector';
+import { getDatacartThunk } from '../../../redux/cartThunk';
 
 interface IProps {
-     handlerAmount: Function;
-     amount: number;
+     // handlerAmount: Function;
+     // amount: number;
+     data: ICart;
 }
 
-export const ItemProductCart = ({ handlerAmount, amount }: IProps) => {
+export const ItemProductCart = ({ data }: IProps) => {
+     const dispath = useAppDispatch();
      const [isCheck, setIsCheck] = useState(true);
+     const [amount, setAmount] = useState(data.quanlity);
+     const handlerAmount = async (value: number, id: string) => {
+          try {
+               if (amount + value < 1) return;
+               const cart: IcartRequest = {
+                    product: id,
+                    quanlity: amount + value,
+               };
+               await dispathData(cart);
+               setAmount(amount + value);
+          } catch (erro) {
+               console.log(erro);
+          }
+     };
 
+     const dispathData = async (dataNew: IcartRequest) => {
+          await dispath(getDatacartThunk(dataNew));
+     };
+     const handlerRemoveCart = async (id: string) => {
+          try {
+               const cart: IcartRequest = {
+                    product: id,
+                    quanlity: 0,
+               };
+
+               await dispathData(cart);
+          } catch (erro) {
+               console.log(erro);
+          }
+     };
      return (
           <tr
                className={`bg-white border-b  dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 ${
@@ -32,20 +68,17 @@ export const ItemProductCart = ({ handlerAmount, amount }: IProps) => {
                     </div>
                </td>
                <th scope="row" className="py-4 px-6 font-medium text-black whitespace-nowrap">
-                    Apple MacBook Pro 17"
+                    {data.product.name}
                </th>
                <td className="py-4 px-6 w-[10%]">
-                    <img
-                         className="w-full h-full"
-                         src="https://traffic-edge03.cdn.vncdn.io/nvn/ncdn/store/662/ps/20220627/AP0136__0_.jpg"
-                    />
+                    <img className="w-full h-full" src={data.product.thumbnails} />
                </td>
                <td className="py-4 px-6 ">
                     <div className="flex items-center">
                          <Button
                               styles="w-[30px] text-center border text-lg border-black"
                               text={'-'}
-                              onClick={() => handlerAmount(-1)}
+                              onClick={() => handlerAmount(-1, data.product._id)}
                          />
                          <input
                               className="w-[30px] text-center border outline-none bg-transparent border-black py-1"
@@ -56,13 +89,17 @@ export const ItemProductCart = ({ handlerAmount, amount }: IProps) => {
                          <Button
                               styles="w-[30px] text-center border text-lg border-black"
                               text={'+'}
-                              onClick={() => handlerAmount(1)}
+                              onClick={() => handlerAmount(1, data.product._id)}
                          />
                     </div>
                </td>
-               <td className="py-4 px-6">$2999</td>
+               <td className="py-4 px-6">{formatPrice(Number(data.product.price) * data.quanlity)}</td>
                <td className="py-4 px-6">
-                    <Button styles={'font-medium text-black  hover:text-white text-2xl '} text={<BsTrash />}></Button>
+                    <Button
+                         styles={'font-medium text-black  hover:text-white text-2xl '}
+                         onClick={() => handlerRemoveCart(data.product._id)}
+                         text={<BsTrash />}
+                    ></Button>
                </td>
           </tr>
      );

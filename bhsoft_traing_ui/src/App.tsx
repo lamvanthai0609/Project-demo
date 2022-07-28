@@ -1,6 +1,7 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { privateRouter, publicRouter } from './config/router';
 import { RouterRender } from './config/routerRender';
+import { NotFound } from './modules/components/notfound';
 
 import { tokenAuthSelector } from './modules/features/login/redux/authSelector';
 import { useAppSelector } from './redux/hook';
@@ -10,8 +11,9 @@ function App() {
      return (
           <div className="App">
                <Router>
-                    <RouterRender listRouter={publicRouter} />
+                    {/* <Route path="*" element={<NotFound />}></Route> */}
                     <RouterRender listRouter={privateRouter} isPrivate />
+                    <RouterRender listRouter={publicRouter} />
                </Router>
           </div>
      );

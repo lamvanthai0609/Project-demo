@@ -1,13 +1,15 @@
 import React, { memo, useEffect, useState } from 'react';
 
-import { useAppSelector } from '../../../../../redux/hook';
+import { useAppDispatch, useAppSelector } from '../../../../../redux/hook';
+import { Loadding } from '../../../../components/loadding';
+import { getAllProductThunk } from '../../redux/producThunk';
 import { getPaginator } from '../../redux/productSelector';
 
 const classStyle =
      'py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-200 dark:border-gray-700 dark:text-black dark:hover:bg-gray-700 dark:hover:text-white ';
 export const Pagination = () => {
+     const dispath = useAppDispatch();
      const paginSelector = useAppSelector(getPaginator);
-     //console.log(paginSelector);
      const [pageIndex, setPageIndex] = useState(1);
      const [totalPage, setTotalPage] = useState(1);
      useEffect(() => {
@@ -18,8 +20,14 @@ export const Pagination = () => {
      }, [paginSelector]);
 
      useEffect(() => {
-          console.log(pageIndex);
-     }, [pageIndex, hanlderClick]);
+          (async () => {
+               try {
+                    dispath(getAllProductThunk(pageIndex));
+               } catch (erro) {
+                    console.log(erro);
+               }
+          })();
+     }, [pageIndex]);
 
      function hanlderClick(value: number) {
           setPageIndex(value);

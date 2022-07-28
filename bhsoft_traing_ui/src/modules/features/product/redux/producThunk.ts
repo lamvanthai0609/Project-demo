@@ -3,9 +3,9 @@ import { IProduct } from '../../../../models';
 import { getAllProductAction, setPaginAction } from './productAction';
 
 export const getAllProductThunk =
-     (): any =>
+     (page: number = 1): any =>
      async (dispath: any): Promise<void> => {
-          const dataRespon = await getAllProductAPI();
+          const dataRespon = await getAllProductAPI(page);
           dispath(getAllProductAction(dataRespon?.results));
           dispath(setPaginAction(dataRespon?.pagination));
      };

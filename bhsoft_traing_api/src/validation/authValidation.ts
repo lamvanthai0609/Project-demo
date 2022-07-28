@@ -25,6 +25,7 @@ class AuthValidation {
                name: req.body.name,
                email: req.body.email,
                role: req.body.role,
+               cart: [],
           };
           if (!dataRequest.username) return failed(res, 'Tài khoản không được trống', 401);
           if (!dataRequest.password) return failed(res, 'Mật khẩu không được trống', 401);

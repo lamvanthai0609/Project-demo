@@ -41,4 +41,4 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:3300/api/product/?_limit=3 HTTP/1.1
+GET http://localhost:3300/api/product/?_page=2 HTTP/1.1
