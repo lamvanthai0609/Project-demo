@@ -1,3 +1,5 @@
+import { Schema } from 'mongoose';
+
 export interface Iuser {
      username: string;
      password: string;
@@ -7,5 +9,11 @@ export interface Iuser {
      image?: string;
      address?: Array<string>;
      role: string;
+     cart?: Array<ICart>;
      comparePassword?: Function;
+}
+
+export interface ICart {
+     product?: Schema.Types.ObjectId;
+     quanlity?: number;
 }

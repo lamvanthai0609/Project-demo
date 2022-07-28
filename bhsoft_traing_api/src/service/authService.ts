@@ -28,7 +28,7 @@ const token = (objToken: IObjToken, res: Response) => {
 class AuthService {
      async login(payload: ILogin, res: Response) {
           try {
-               const user = await User.findOne({ username: payload.username });
+               const user: any = await User.findOne({ username: payload.username }).populate('cart.product');
                if (user) {
                     const checkPass = user.comparePassword && (await user.comparePassword(payload.password));
                     if (checkPass) {
@@ -38,7 +38,9 @@ class AuthService {
                               role: user.role,
                          };
                          const accessToken = token(objToken, res);
-                         return { user, accessToken };
+
+                         const { password, ...dataUser } = user._doc;
+                         return { dataUser, accessToken };
                     } else {
                          throw 'Mật khẩu không chính xác';
                     }
@@ -68,6 +70,9 @@ class AuthService {
           } catch (erro) {
                throw erro;
           }
+     }
+     async checkToken(token: string) {
+          return await jwt.verify(token, keyAccessToken);
      }
 }
 

@@ -2,8 +2,13 @@ import mongoose, { Model } from 'mongoose';
 import mongooseDelete from 'mongoose-delete';
 import { ROLES } from '../../constants';
 import bcrypt from 'bcrypt';
-import { Iuser } from '../../interface';
+import { ICart, Iuser } from '../../interface';
 const Schema = mongoose.Schema;
+
+const Cart = new Schema<ICart, Model<ICart>>({
+     product: { type: Schema.Types.ObjectId, ref: 'Product' },
+     quanlity: { type: Number, default: 1 },
+});
 
 const User = new Schema<Iuser, Model<Iuser>>(
      {
@@ -14,6 +19,7 @@ const User = new Schema<Iuser, Model<Iuser>>(
           numberphone: { type: String, unique: true },
           image: { type: String },
           address: { type: [String] },
+          cart: [{ type: Cart }],
           role: { type: String, default: ROLES.VIEWER },
      },
      { timestamps: true },
