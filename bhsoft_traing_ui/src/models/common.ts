@@ -3,8 +3,3 @@ export interface IRespon<T = any> {
      results: T;
      pagination?: any;
 }
-
-export interface INotification {
-     mess: string;
-     type: string;
-}

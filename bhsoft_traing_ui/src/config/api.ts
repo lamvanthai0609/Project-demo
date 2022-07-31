@@ -4,7 +4,8 @@ import { SERVER } from '../constants/index';
 export const API_PATHS = {
      login: '/auth/login',
      sigup: '',
-     refeshToken: '',
+     refeshToken: '/auth/refeshToken',
+     logout: '/auth/logout',
      getAllProduct: '/product',
      addCart: '/user/addCart',
 };

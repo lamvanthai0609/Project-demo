@@ -21,7 +21,15 @@ class AuthController {
                failed(res, erro);
           }
      }
-     async refeshToken(req: Request, res: Response) {}
-     async logout(req: Request, res: Response) {}
+     async refeshToken(req: Request, res: Response) {
+          const token = req.body.token;
+          const dataRespon = await authService.refeshTokenFc(token, res);
+          success(res, dataRespon);
+     }
+     async logout(req: Request, res: Response) {
+          const token = req.body.token;
+          const dataRespon = await authService.logout(token, res);
+          success(res, dataRespon);
+     }
 }
 export default new AuthController();

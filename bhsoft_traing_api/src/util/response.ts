@@ -2,7 +2,7 @@ import { Response } from 'express';
 
 export const success = (res: Response, data: any, pagination?: any) => {
      return res.status(200).json({
-          message: 'OK',
+          message: 'Thành công',
           statusCode: 200,
           success: true,
           results: data,

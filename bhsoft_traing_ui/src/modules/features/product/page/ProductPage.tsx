@@ -1,11 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { getAllProductAPI } from '../../../../commons/api/productAPI';
+import { useEffect, useState } from 'react';
+import { Store } from 'react-notifications-component';
 import { useAppDispatch, useAppSelector } from '../../../../redux/hook';
 import { useDebounce } from '../../../../util/customHook/useDebounc';
-import { Alert } from '../../../components/alert';
 import { Loadding } from '../../../components/loadding';
-import { tokenAuthSelector } from '../../login/redux/authSelector';
 import { FilterProduct } from '../components/filterProduct';
 import { GroupCard } from '../components/groupCard';
 import { Pagination } from '../components/pagination';
@@ -33,8 +30,20 @@ export const ProductPage = () => {
                     (async () => {
                          await dispath(getAllProductThunk());
                     })();
-               } catch (erro) {
-                    console.log(erro);
+               } catch (erro: any) {
+                    Store.addNotification({
+                         title: 'Lỗi!',
+                         message: erro.message || ' Lỗi không xác định ',
+                         type: 'danger',
+                         insert: 'top',
+                         container: 'top-right',
+                         animationIn: ['animate__animated', 'animate__fadeIn'],
+                         animationOut: ['animate__animated', 'animate__fadeOut'],
+                         dismiss: {
+                              duration: 2000,
+                              onScreen: true,
+                         },
+                    });
                } finally {
                     setIsLoadding(false);
                }
@@ -42,7 +51,6 @@ export const ProductPage = () => {
      }, [data]);
      return (
           <>
-               {isError && <Alert />}
                {isloadding && <Loadding />}
                <>
                     <div>

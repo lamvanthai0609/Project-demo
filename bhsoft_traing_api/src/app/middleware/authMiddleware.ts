@@ -15,7 +15,7 @@ class AuthMiddleware {
                req.user = data.id;
                next();
           } catch (error) {
-               failed(res, 'Unauthorized error!', 401);
+               failed(res, 'Token hết hạn!', 401);
           }
      }
 }

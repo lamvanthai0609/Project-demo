@@ -17,9 +17,7 @@ export const ListProductCart = () => {
 
      useEffect(() => {
           if (data) {
-               const total = data
-                    .map((item) => item.product.price * item.quanlity)
-                    .reduce((total, quanlity) => total + quanlity, 0);
+               const total = data.reduce((total, item) => total + item.quanlity * item.product.price, 0);
                setTotalMoney(total);
           }
      }, [data]);

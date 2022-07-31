@@ -39,6 +39,13 @@ class AuthValidation {
           req.body = dataRequest;
           next();
      }
+
+     refeshToken(req: Request, res: Response, next: NextFunction) {
+          const token = req.cookies.refeshToken;
+          if (!token) return failed(res, 'Token không tồn tại', 401);
+          req.body.token = token;
+          next();
+     }
 }
 
 export default new AuthValidation();

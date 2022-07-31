@@ -9,10 +9,7 @@ export const CartIconHeader = () => {
      useEffect(() => {
           if (cartData) {
                if (cartData.length > 0) {
-                    const totalQuanlity = cartData
-                         .map((item) => item.quanlity)
-                         .reduce((total, quanlity) => total + quanlity, 0);
-
+                    const totalQuanlity = cartData.reduce((total, item) => total + item.quanlity, 0);
                     setQuanlity(totalQuanlity);
                } else {
                     setQuanlity(0);

@@ -1,9 +1,10 @@
 import { IProduct } from '../../../models';
 import { ICart, IcartRequest } from '../../../models/cart';
 import { useAppDispatch, useAppSelector } from '../../../redux/hook';
-import { formatPrice } from '../../../util/common';
+import { alertFc, formatPrice } from '../../../util/common';
 import { getDataCartSelector } from '../../features/cart/redux/cartSelector';
 import { getDatacartThunk } from '../../features/cart/redux/cartThunk';
+import { login, refeshToken } from '../../features/login/redux/authThunk';
 import { Button } from '../button';
 const style =
      'bg-black text-white px-4 py-2 text-sm w-[120px] border-2 border-solid border-transparent hover:text-black hover:bg-zinc-200 hover:border-black';
@@ -22,9 +23,26 @@ export const Card = ({ data }: IProps) => {
           };
           (async () => {
                try {
-                    await dispath(getDatacartThunk(cart));
-               } catch (erro) {
-                    console.log(erro);
+                    console.log(cart);
+                    const data = await dispath(getDatacartThunk(cart));
+                    console.log(data);
+
+                    alertFc(`Thêm vào giỏ hàng ${data.message}`, 'success');
+               } catch (erro: any) {
+                    console.log('vào');
+
+                    if (erro.message === 'Token hết hạn!') {
+                         console.log('vào 2');
+
+                         try {
+                              console.log('vào 23');
+                              //await dispath(refeshToken());
+                         } catch (error: any) {
+                              alertFc(erro.message || 'Lỗi không xác định', 'danger');
+                         }
+                    } else {
+                         alertFc(erro.message || 'Lỗi không xác định', 'danger');
+                    }
                }
           })();
      };

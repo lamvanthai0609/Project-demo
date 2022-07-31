@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { BsTrash } from 'react-icons/bs';
+import { Store } from 'react-notifications-component';
 import { ICart, IcartRequest } from '../../../../../../models/cart';
 import { useAppDispatch, useAppSelector } from '../../../../../../redux/hook';
-import { formatPrice } from '../../../../../../util/common';
+import { alertFc, formatPrice } from '../../../../../../util/common';
 import { Button } from '../../../../../components/button';
 import { getDataCartSelector } from '../../../redux/cartSelector';
 import { getDatacartThunk } from '../../../redux/cartThunk';
@@ -26,8 +27,8 @@ export const ItemProductCart = ({ data }: IProps) => {
                };
                await dispathData(cart);
                setAmount(amount + value);
-          } catch (erro) {
-               console.log(erro);
+          } catch (erro: any) {
+               alertFc(erro.message || 'Lỗi không xác định', 'danger');
           }
      };
 
@@ -40,10 +41,10 @@ export const ItemProductCart = ({ data }: IProps) => {
                     product: id,
                     quanlity: 0,
                };
-
                await dispathData(cart);
-          } catch (erro) {
-               console.log(erro);
+               alertFc('Xóa thành công', 'success');
+          } catch (erro: any) {
+               alertFc(erro.message || 'Lỗi không xác định', 'danger');
           }
      };
      return (

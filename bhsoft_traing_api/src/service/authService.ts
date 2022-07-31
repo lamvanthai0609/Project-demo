@@ -10,18 +10,18 @@ let refeshTokens: Array<string> = [];
 
 const token = (objToken: IObjToken, res: Response) => {
      const accessToken = jwt.sign(objToken, keyAccessToken, {
-          expiresIn: '300s',
+          expiresIn: '60s',
      });
      const refeshToken = jwt.sign(objToken, keyRefeshToken, {
           expiresIn: '10d',
      });
+     refeshTokens.push(refeshToken);
      res.cookie('refeshToken', refeshToken, {
           httpOnly: true,
           secure: false,
           sameSite: 'strict',
           path: '/',
      });
-     refeshTokens.push(refeshToken);
      return accessToken;
 };
 
@@ -72,7 +72,35 @@ class AuthService {
           }
      }
      async checkToken(token: string) {
-          return await jwt.verify(token, keyAccessToken);
+          const data: any = await jwt.verify(token, keyAccessToken);
+          return data;
+     }
+     async refeshTokenFc(refeshToken: string, res: Response) {
+          try {
+               const data: any = await jwt.verify(refeshToken, keyRefeshToken);
+
+               const objToken: IObjToken = {
+                    id: data.id,
+                    username: data.username,
+                    role: data.role,
+               };
+               refeshTokens = refeshTokens.filter((token) => token !== refeshToken);
+               const accessTokenNew = token(objToken, res);
+               return { accessToken: accessTokenNew };
+          } catch (error) {
+               throw 'Token hết hạn';
+          }
+     }
+     async logout(rftoken: string, res: Response) {
+          try {
+               res.clearCookie('refeshToken');
+               refeshTokens = refeshTokens.filter((token) => {
+                    token !== rftoken;
+               });
+               return 'Đăng xuất thành công';
+          } catch (erro) {
+               throw erro;
+          }
      }
 }
 

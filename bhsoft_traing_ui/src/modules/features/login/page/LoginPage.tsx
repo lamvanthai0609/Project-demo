@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Store } from 'react-notifications-component';
 import { ILogin } from '../../../../models';
 import { useAppDispatch, useAppSelector } from '../../../../redux/hook';
 import { Loadding } from '../../../components/loadding';
 import { LoginForm } from '../components/LoginForm';
 import { tokenAuthSelector } from '../redux/authSelector';
 import { login } from '../redux/authThunk';
+import { alertFc } from '../../../../util/common';
 
 export const LoginPage = () => {
      const dispath = useAppDispatch();
@@ -52,8 +54,8 @@ export const LoginPage = () => {
                     try {
                          setIsloadding(true);
                          await dispath(login(value));
-                    } catch (erro) {
-                         console.log(erro);
+                    } catch (erro: any) {
+                         alertFc(erro.message || 'Lỗi không xác định', 'danger');
                     } finally {
                          setIsloadding(false);
                     }

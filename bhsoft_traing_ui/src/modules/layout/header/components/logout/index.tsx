@@ -1,15 +1,17 @@
 import React from 'react';
 import { useAppDispatch } from '../../../../../redux/hook';
+import { alertFc } from '../../../../../util/common';
 import { Button } from '../../../../components/button';
 import { logout } from '../../../../features/login/redux/authThunk';
 
 export const Logout = () => {
      const dispath = useAppDispatch();
-     const handlerLogout = () => {
+     const handlerLogout = async () => {
           try {
-               dispath(logout());
-          } catch (erro) {
-               console.log(erro);
+               const data: any = await dispath(logout());
+               alertFc(data.message, 'success');
+          } catch (erro: any) {
+               alertFc(erro.message, 'danger');
           }
      };
      return (

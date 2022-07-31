@@ -5,7 +5,8 @@ import { setDataCartAction } from './cartAction';
 export const getDatacartThunk =
      (data: IcartRequest): any =>
      async (dispath: any): Promise<void> => {
-          const dataRespon = await addCartAPI(data);
-          console.log(dataRespon);
-          dispath(setDataCartAction(dataRespon));
+          const dataRespon: any = await addCartAPI(data);
+          //console.log(dataRespon);
+          dispath(setDataCartAction(dataRespon.results));
+          return dataRespon;
      };
