@@ -3,8 +3,7 @@ import axiosClient, { API_PATHS } from '../../config/api';
 import { ILogin, IRespon } from '../../models';
 
 export const loginAPI = async (data: ILogin): Promise<IRespon> => {
-     const datares = await axios.post(`http://localhost:3300/api${API_PATHS.login}`, data);
-     return datares.data;
+     return axiosClient.post(API_PATHS.login, data);
 };
 
 export const logoutAPI = async (): Promise<IRespon> => {
