@@ -7,8 +7,6 @@ export const login =
      (data: ILogin): any =>
      async (dispath: any): Promise<void> => {
           const dataRespon = await loginAPI(data);
-          console.log(dataRespon);
-
           localStorage.setItem('token', dataRespon?.results.accessToken);
           dispath(setAuthAction(dataRespon?.results.accessToken));
           dispath(setUserInfoAction(dataRespon?.results.dataUser));
@@ -17,7 +15,6 @@ export const login =
 
 export const refeshToken = (): any => async (dispath: any) => {
      const dataRespon = await refeshTokenAPI();
-     console.log(dataRespon);
      localStorage.setItem('token', dataRespon?.results.accessToken);
      dispath(setAuthAction(dataRespon?.results.accessToken));
 };

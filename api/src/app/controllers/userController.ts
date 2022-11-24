@@ -5,7 +5,8 @@ import { success } from '../../util';
 
 class UserController {
      async findUser(req: Request, res: Response) {
-          return res.json(req);
+          const data = await userService.findUser(req.user);
+          success(res, data);
      }
 
      async addCart(req: Request, res: Response) {
